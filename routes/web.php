@@ -11,14 +11,25 @@
 |
 */
 
+use App\Mail\ContactMessageCreated;
+
 Route::get('/', [
     'as' => 'home',
     'uses' => 'PagesController@home'
 ]);
+
+Route::get('/test-email', function() {
+    return new ContactMessageCreated('Jean Dupont', 'jdupont@gmail.com', 'Fier de faire partie de la cummunauté Laracarte.');
+});
 
 Route::get('/about', [
     'as' => 'about',
     'uses' => 'PagesController@about'
 ]);
 
-Route::get('/contact', 'ContactsController@create')->name('contact');
+Route::get('/contact', 'ContactsController@create')->name('contact.create');
+
+Route::post('/contact', [
+    'as' => 'contact.store',
+    'uses' => 'ContactsController@store'
+]);
